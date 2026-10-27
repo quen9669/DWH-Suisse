@@ -1,0 +1,1155 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1600,
+  "model": {
+    "culture": "fr-FR",
+    "description": "DWH Suisse : ponctualité des transports publics suisses croisée avec la météo.",
+    "dataSources": [
+      {
+        "name": "CH_DWH",
+        "connectionString": "Provider=MSOLEDBSQL.1;Data Source=localhost;Initial Catalog=CH_DWH;Integrated Security=SSPI;Persist Security Info=False",
+        "impersonationMode": "impersonateServiceAccount"
+      }
+    ],
+    "tables": [
+      {
+        "name": "Date",
+        "description": "Calendrier (jour d'exploitation des transports).",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "sourceColumn": "DateKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Date",
+            "summarizeBy": "none",
+            "formatString": "dd/mm/yyyy",
+            "isKey": true
+          },
+          {
+            "name": "Année",
+            "dataType": "int64",
+            "sourceColumn": "Year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Trimestre n°",
+            "dataType": "int64",
+            "sourceColumn": "Quarter",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Trimestre (tri)",
+            "dataType": "int64",
+            "sourceColumn": "YearQuarter",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Trimestre",
+            "dataType": "string",
+            "sourceColumn": "QuarterLabel",
+            "summarizeBy": "none",
+            "sortByColumn": "Trimestre (tri)"
+          },
+          {
+            "name": "Mois n°",
+            "dataType": "int64",
+            "sourceColumn": "Month",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Mois",
+            "dataType": "string",
+            "sourceColumn": "MonthName",
+            "summarizeBy": "none",
+            "sortByColumn": "Mois n°"
+          },
+          {
+            "name": "Année-Mois (tri)",
+            "dataType": "int64",
+            "sourceColumn": "YearMonth",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Année-Mois",
+            "dataType": "string",
+            "sourceColumn": "YearMonthLabel",
+            "summarizeBy": "none",
+            "sortByColumn": "Année-Mois (tri)"
+          },
+          {
+            "name": "Semaine ISO",
+            "dataType": "int64",
+            "sourceColumn": "IsoWeek",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Jour du mois",
+            "dataType": "int64",
+            "sourceColumn": "DayOfMonth",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Jour de la semaine n°",
+            "dataType": "int64",
+            "sourceColumn": "DayOfWeek",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Jour de la semaine",
+            "dataType": "string",
+            "sourceColumn": "DayName",
+            "summarizeBy": "none",
+            "sortByColumn": "Jour de la semaine n°"
+          },
+          {
+            "name": "Week-end",
+            "dataType": "boolean",
+            "sourceColumn": "IsWeekend",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Férié",
+            "dataType": "boolean",
+            "sourceColumn": "IsHoliday",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Nom du jour férié",
+            "dataType": "string",
+            "sourceColumn": "HolidayName",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Type de jour",
+            "dataType": "string",
+            "sourceColumn": "DayType",
+            "summarizeBy": "none",
+            "description": "Jour ouvrable / Samedi / Dimanche ou férié"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Date",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_Date",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ],
+        "dataCategory": "Time",
+        "hierarchies": [
+          {
+            "name": "Calendrier",
+            "levels": [
+              {
+                "name": "Année",
+                "ordinal": 0,
+                "column": "Année"
+              },
+              {
+                "name": "Mois",
+                "ordinal": 1,
+                "column": "Mois"
+              },
+              {
+                "name": "Date",
+                "ordinal": 2,
+                "column": "Date"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Heure",
+        "description": "Heure prévue du passage (à la minute) ; heure pleine pour la météo.",
+        "columns": [
+          {
+            "name": "TimeKey",
+            "dataType": "int64",
+            "sourceColumn": "TimeKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Heure n°",
+            "dataType": "int64",
+            "sourceColumn": "Hour",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Minute",
+            "dataType": "int64",
+            "sourceColumn": "Minute",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Heure",
+            "dataType": "string",
+            "sourceColumn": "HourLabel",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Horaire",
+            "dataType": "string",
+            "sourceColumn": "TimeLabel",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Tranche horaire (tri)",
+            "dataType": "int64",
+            "sourceColumn": "TimeBandOrder",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Tranche horaire",
+            "dataType": "string",
+            "sourceColumn": "TimeBand",
+            "summarizeBy": "none",
+            "sortByColumn": "Tranche horaire (tri)"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Heure",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_Heure",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Journée",
+            "levels": [
+              {
+                "name": "Tranche horaire",
+                "ordinal": 0,
+                "column": "Tranche horaire"
+              },
+              {
+                "name": "Heure",
+                "ordinal": 1,
+                "column": "Heure"
+              },
+              {
+                "name": "Horaire",
+                "ordinal": 2,
+                "column": "Horaire"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Canton",
+        "description": "Canton suisse de l'arrêt (Inconnu / étranger = arrêt hors de Suisse).",
+        "columns": [
+          {
+            "name": "CantonKey",
+            "dataType": "int64",
+            "sourceColumn": "CantonKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Canton (abr.)",
+            "dataType": "string",
+            "sourceColumn": "CantonAbbr",
+            "summarizeBy": "none",
+            "dataCategory": "StateOrProvince"
+          },
+          {
+            "name": "Canton",
+            "dataType": "string",
+            "sourceColumn": "CantonName",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Chef-lieu",
+            "dataType": "string",
+            "sourceColumn": "Capital",
+            "summarizeBy": "none",
+            "dataCategory": "City"
+          },
+          {
+            "name": "Région linguistique",
+            "dataType": "string",
+            "sourceColumn": "LanguageRegion",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Latitude",
+            "dataType": "decimal",
+            "sourceColumn": "Latitude",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "dataCategory": "Latitude"
+          },
+          {
+            "name": "Longitude",
+            "dataType": "decimal",
+            "sourceColumn": "Longitude",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "dataCategory": "Longitude"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Canton",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_Canton",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Géographie",
+            "levels": [
+              {
+                "name": "Région linguistique",
+                "ordinal": 0,
+                "column": "Région linguistique"
+              },
+              {
+                "name": "Canton",
+                "ordinal": 1,
+                "column": "Canton"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Gare",
+        "description": "Points d'arrêt (gares, arrêts de bus...) - historisés (SCD type 2).",
+        "columns": [
+          {
+            "name": "StationKey",
+            "dataType": "int64",
+            "sourceColumn": "StationKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "UIC",
+            "dataType": "int64",
+            "sourceColumn": "Uic",
+            "summarizeBy": "none",
+            "description": "Numéro officiel de l'arrêt"
+          },
+          {
+            "name": "Gare",
+            "dataType": "string",
+            "sourceColumn": "StationName",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Gare (libellé)",
+            "dataType": "string",
+            "sourceColumn": "StationLabel",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Abréviation",
+            "dataType": "string",
+            "sourceColumn": "Abbreviation",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Pays",
+            "dataType": "string",
+            "sourceColumn": "CountryIso",
+            "summarizeBy": "none",
+            "dataCategory": "Country"
+          },
+          {
+            "name": "Commune",
+            "dataType": "string",
+            "sourceColumn": "MunicipalityName",
+            "summarizeBy": "none",
+            "dataCategory": "City"
+          },
+          {
+            "name": "District",
+            "dataType": "string",
+            "sourceColumn": "DistrictName",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Moyens de transport",
+            "dataType": "string",
+            "sourceColumn": "MeansOfTransport",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Gestionnaire",
+            "dataType": "string",
+            "sourceColumn": "OwnerAbbr",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Latitude",
+            "dataType": "decimal",
+            "sourceColumn": "Latitude",
+            "summarizeBy": "none",
+            "dataCategory": "Latitude"
+          },
+          {
+            "name": "Longitude",
+            "dataType": "decimal",
+            "sourceColumn": "Longitude",
+            "summarizeBy": "none",
+            "dataCategory": "Longitude"
+          },
+          {
+            "name": "Altitude (m)",
+            "dataType": "decimal",
+            "sourceColumn": "Altitude",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Arrêt déduit",
+            "dataType": "boolean",
+            "sourceColumn": "IsInferred",
+            "summarizeBy": "none",
+            "description": "Vrai = arrêt vu dans les passages mais absent du référentiel"
+          },
+          {
+            "name": "Valide du",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidFrom",
+            "summarizeBy": "none",
+            "formatString": "dd/mm/yyyy"
+          },
+          {
+            "name": "Valide jusqu'au",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidTo",
+            "summarizeBy": "none",
+            "formatString": "dd/mm/yyyy"
+          },
+          {
+            "name": "Version courante",
+            "dataType": "boolean",
+            "sourceColumn": "IsCurrent",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Gare",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_Gare",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Opérateur",
+        "description": "Entreprise de transport (CFF/SBB, BLS, CarPostal...).",
+        "columns": [
+          {
+            "name": "OperatorKey",
+            "dataType": "int64",
+            "sourceColumn": "OperatorKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Opérateur",
+            "dataType": "string",
+            "sourceColumn": "OperatorAbbr",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Nom de l'opérateur",
+            "dataType": "string",
+            "sourceColumn": "OperatorName",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Opérateur",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_Operateur",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Ligne",
+        "description": "Ligne commerciale (par opérateur et mode).",
+        "columns": [
+          {
+            "name": "LineKey",
+            "dataType": "int64",
+            "sourceColumn": "LineKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Ligne",
+            "dataType": "string",
+            "sourceColumn": "LineCode",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Type de service",
+            "dataType": "string",
+            "sourceColumn": "ServiceType",
+            "summarizeBy": "none",
+            "description": "IC, IR, RE, S, B (bus)..."
+          },
+          {
+            "name": "Ligne (libellé)",
+            "dataType": "string",
+            "sourceColumn": "LineLabel",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Ligne",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_Ligne",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Mode de transport",
+        "description": "Train, bus, tram, bateau, funiculaire...",
+        "columns": [
+          {
+            "name": "TransportModeKey",
+            "dataType": "int64",
+            "sourceColumn": "TransportModeKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Mode",
+            "dataType": "string",
+            "sourceColumn": "ModeLabel",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Catégorie de mode",
+            "dataType": "string",
+            "sourceColumn": "ModeCategory",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Mode de transport",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_Mode",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Modes",
+            "levels": [
+              {
+                "name": "Catégorie de mode",
+                "ordinal": 0,
+                "column": "Catégorie de mode"
+              },
+              {
+                "name": "Mode",
+                "ordinal": 1,
+                "column": "Mode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Statut arrivée",
+        "description": "Qualité de l'heure d'arrivée réelle (mesurée, estimée, prévision...).",
+        "columns": [
+          {
+            "name": "StatusKey",
+            "dataType": "int64",
+            "sourceColumn": "StatusKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Statut arrivée",
+            "dataType": "string",
+            "sourceColumn": "StatusLabel",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Arrivée mesurée",
+            "dataType": "boolean",
+            "sourceColumn": "IsMeasured",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Statut arrivée",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_StatutMesure",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Statut départ",
+        "description": "Qualité de l'heure de départ réelle (même référentiel que l'arrivée).",
+        "columns": [
+          {
+            "name": "StatusKey",
+            "dataType": "int64",
+            "sourceColumn": "StatusKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Statut départ",
+            "dataType": "string",
+            "sourceColumn": "StatusLabel",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Départ mesuré",
+            "dataType": "boolean",
+            "sourceColumn": "IsMeasured",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Statut départ",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_StatutMesure",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Passages",
+        "description": "FAIT : un passage d'un trajet à un arrêt (horaire prévu vs réel).",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "sourceColumn": "DateKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "TimeKey",
+            "dataType": "int64",
+            "sourceColumn": "TimeKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "HourKey",
+            "dataType": "int64",
+            "sourceColumn": "HourKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "StationKey",
+            "dataType": "int64",
+            "sourceColumn": "StationKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "CantonKey",
+            "dataType": "int64",
+            "sourceColumn": "CantonKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "OperatorKey",
+            "dataType": "int64",
+            "sourceColumn": "OperatorKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "LineKey",
+            "dataType": "int64",
+            "sourceColumn": "LineKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "TransportModeKey",
+            "dataType": "int64",
+            "sourceColumn": "TransportModeKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "ArrivalStatusKey",
+            "dataType": "int64",
+            "sourceColumn": "ArrivalStatusKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "DepartureStatusKey",
+            "dataType": "int64",
+            "sourceColumn": "DepartureStatusKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Trajet",
+            "dataType": "string",
+            "sourceColumn": "TripId",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Retard (min)",
+            "dataType": "decimal",
+            "sourceColumn": "DelayMinutes",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Retard positif (min)",
+            "dataType": "decimal",
+            "sourceColumn": "PositiveDelayMinutes",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Trajet supplémentaire",
+            "dataType": "boolean",
+            "sourceColumn": "IsAdditionalTrip",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Passage sans arrêt",
+            "dataType": "boolean",
+            "sourceColumn": "IsPassThrough",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "StopCount",
+            "dataType": "int64",
+            "sourceColumn": "StopCount",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "CancelledCount",
+            "dataType": "int64",
+            "sourceColumn": "CancelledCount",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "MeasuredCount",
+            "dataType": "int64",
+            "sourceColumn": "MeasuredCount",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "PunctualCount",
+            "dataType": "int64",
+            "sourceColumn": "PunctualCount",
+            "summarizeBy": "none",
+            "isHidden": true
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Passages",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_Passage",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Nb passages",
+            "expression": "SUM ( 'Passages'[StopCount] )",
+            "formatString": "#,0",
+            "displayFolder": "1. Volumes",
+            "description": "Nombre de passages planifiés (un trajet qui dessert un arrêt)."
+          },
+          {
+            "name": "Nb trajets",
+            "expression": "SUMX ( VALUES ( 'Date'[DateKey] ), CALCULATE ( DISTINCTCOUNT ( 'Passages'[Trajet] ) ) )",
+            "formatString": "#,0",
+            "displayFolder": "1. Volumes",
+            "description": "Nombre de trajets distincts (un identifiant de trajet se répète chaque jour, d'où le calcul jour par jour)."
+          },
+          {
+            "name": "Nb passages mesurés",
+            "expression": "SUM ( 'Passages'[MeasuredCount] )",
+            "formatString": "#,0",
+            "displayFolder": "1. Volumes",
+            "description": "Passages dont l'heure réelle est mesurée ou estimée (base des indicateurs de ponctualité)."
+          },
+          {
+            "name": "Nb passages ponctuels",
+            "expression": "SUM ( 'Passages'[PunctualCount] )",
+            "formatString": "#,0",
+            "displayFolder": "2. Ponctualité",
+            "description": "Passages mesurés avec moins de 3 minutes de retard (définition CFF)."
+          },
+          {
+            "name": "Taux de ponctualité",
+            "expression": "DIVIDE ( [Nb passages ponctuels], [Nb passages mesurés] )",
+            "formatString": "0.0 %",
+            "displayFolder": "2. Ponctualité",
+            "description": "Part des passages mesurés arrivés avec moins de 3 minutes de retard."
+          },
+          {
+            "name": "Taux de ponctualité J-7",
+            "expression": "CALCULATE ( [Taux de ponctualité], DATEADD ( 'Date'[Date], -7, DAY ) )",
+            "formatString": "0.0 %",
+            "displayFolder": "2. Ponctualité",
+            "description": "Même indicateur une semaine plus tôt."
+          },
+          {
+            "name": "Évolution ponctualité vs J-7",
+            "expression": "IF ( NOT ISBLANK ( [Taux de ponctualité J-7] ), [Taux de ponctualité] - [Taux de ponctualité J-7] )",
+            "formatString": "+0.0 %;-0.0 %;0.0 %",
+            "displayFolder": "2. Ponctualité",
+            "description": "Écart (en points) avec la semaine précédente."
+          },
+          {
+            "name": "Retard moyen (min)",
+            "expression": "AVERAGE ( 'Passages'[Retard (min)] )",
+            "formatString": "0.00",
+            "displayFolder": "3. Retards",
+            "description": "Retard moyen des passages mesurés (une avance compte en négatif)."
+          },
+          {
+            "name": "Retard max (min)",
+            "expression": "MAX ( 'Passages'[Retard (min)] )",
+            "formatString": "0.0",
+            "displayFolder": "3. Retards",
+            "description": "Plus gros retard mesuré."
+          },
+          {
+            "name": "Retard cumulé (h)",
+            "expression": "SUM ( 'Passages'[Retard positif (min)] ) / 60",
+            "formatString": "#,0.0",
+            "displayFolder": "3. Retards",
+            "description": "Somme des retards (avances ignorées), en heures."
+          },
+          {
+            "name": "Nb passages retard ≥ 5 min",
+            "expression": "CALCULATE ( [Nb passages mesurés], 'Passages'[Retard (min)] >= 5 )",
+            "formatString": "#,0",
+            "displayFolder": "3. Retards",
+            "description": "Passages mesurés avec au moins 5 minutes de retard."
+          },
+          {
+            "name": "Nb suppressions",
+            "expression": "SUM ( 'Passages'[CancelledCount] )",
+            "formatString": "#,0",
+            "displayFolder": "4. Suppressions",
+            "description": "Passages supprimés (trajet annulé)."
+          },
+          {
+            "name": "Taux de suppression",
+            "expression": "DIVIDE ( [Nb suppressions], [Nb passages] )",
+            "formatString": "0.00 %",
+            "displayFolder": "4. Suppressions",
+            "description": "Part des passages planifiés qui ont été supprimés."
+          },
+          {
+            "name": "Taux de ponctualité - heures pluvieuses",
+            "expression": "VAR HeuresPluie =\n    CALCULATETABLE (\n        SUMMARIZE ( 'Météo', 'Météo'[DateKey], 'Météo'[TimeKey], 'Météo'[CantonKey] ),\n        'Météo'[IsWetHour] = 1\n    )\nRETURN\n    CALCULATE (\n        [Taux de ponctualité],\n        TREATAS ( HeuresPluie, 'Passages'[DateKey], 'Passages'[HourKey], 'Passages'[CantonKey] )\n    )",
+            "formatString": "0.0 %",
+            "displayFolder": "5. Météo croisée",
+            "description": "Ponctualité des passages ayant eu lieu pendant une heure de pluie/neige dans leur canton."
+          },
+          {
+            "name": "Taux de ponctualité - heures sèches",
+            "expression": "VAR HeuresSeches =\n    CALCULATETABLE (\n        SUMMARIZE ( 'Météo', 'Météo'[DateKey], 'Météo'[TimeKey], 'Météo'[CantonKey] ),\n        'Météo'[IsWetHour] = 0\n    )\nRETURN\n    CALCULATE (\n        [Taux de ponctualité],\n        TREATAS ( HeuresSeches, 'Passages'[DateKey], 'Passages'[HourKey], 'Passages'[CantonKey] )\n    )",
+            "formatString": "0.0 %",
+            "displayFolder": "5. Météo croisée",
+            "description": "Ponctualité des passages ayant eu lieu pendant une heure sans précipitations dans leur canton."
+          }
+        ]
+      },
+      {
+        "name": "Météo",
+        "description": "FAIT : météo horaire au chef-lieu de chaque canton (Open-Meteo).",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "sourceColumn": "DateKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "TimeKey",
+            "dataType": "int64",
+            "sourceColumn": "TimeKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "CantonKey",
+            "dataType": "int64",
+            "sourceColumn": "CantonKey",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Temperature",
+            "dataType": "decimal",
+            "sourceColumn": "Temperature",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Precipitation",
+            "dataType": "decimal",
+            "sourceColumn": "Precipitation",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "Snowfall",
+            "dataType": "decimal",
+            "sourceColumn": "Snowfall",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "WindSpeed",
+            "dataType": "decimal",
+            "sourceColumn": "WindSpeed",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "IsWetHour",
+            "dataType": "int64",
+            "sourceColumn": "IsWetHour",
+            "summarizeBy": "none",
+            "isHidden": true
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Météo",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": "SELECT * FROM cube.vw_Meteo",
+              "dataSource": "CH_DWH"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Température moyenne (°C)",
+            "expression": "AVERAGE ( 'Météo'[Temperature] )",
+            "formatString": "0.0",
+            "displayFolder": "Météo",
+            "description": "Température moyenne à 2 m."
+          },
+          {
+            "name": "Précipitations (mm)",
+            "expression": "SUM ( 'Météo'[Precipitation] )",
+            "formatString": "#,0.0",
+            "displayFolder": "Météo",
+            "description": "Cumul de pluie (additionné sur les heures et cantons sélectionnés)."
+          },
+          {
+            "name": "Neige (cm)",
+            "expression": "SUM ( 'Météo'[Snowfall] )",
+            "formatString": "#,0.0",
+            "displayFolder": "Météo",
+            "description": "Cumul de neige fraîche."
+          },
+          {
+            "name": "Vent moyen (km/h)",
+            "expression": "AVERAGE ( 'Météo'[WindSpeed] )",
+            "formatString": "0.0",
+            "displayFolder": "Météo",
+            "description": "Vitesse moyenne du vent à 10 m."
+          },
+          {
+            "name": "Heures pluvieuses",
+            "expression": "SUM ( 'Météo'[IsWetHour] )",
+            "formatString": "#,0",
+            "displayFolder": "Météo",
+            "description": "Nombre d'heures x cantons avec au moins 0,5 mm de pluie ou de la neige."
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "Passages_DateKey_Date",
+        "fromTable": "Passages",
+        "fromColumn": "DateKey",
+        "toTable": "Date",
+        "toColumn": "DateKey"
+      },
+      {
+        "name": "Passages_TimeKey_Heure",
+        "fromTable": "Passages",
+        "fromColumn": "TimeKey",
+        "toTable": "Heure",
+        "toColumn": "TimeKey"
+      },
+      {
+        "name": "Passages_StationKey_Gare",
+        "fromTable": "Passages",
+        "fromColumn": "StationKey",
+        "toTable": "Gare",
+        "toColumn": "StationKey"
+      },
+      {
+        "name": "Passages_CantonKey_Canton",
+        "fromTable": "Passages",
+        "fromColumn": "CantonKey",
+        "toTable": "Canton",
+        "toColumn": "CantonKey"
+      },
+      {
+        "name": "Passages_OperatorKey_Opérateur",
+        "fromTable": "Passages",
+        "fromColumn": "OperatorKey",
+        "toTable": "Opérateur",
+        "toColumn": "OperatorKey"
+      },
+      {
+        "name": "Passages_LineKey_Ligne",
+        "fromTable": "Passages",
+        "fromColumn": "LineKey",
+        "toTable": "Ligne",
+        "toColumn": "LineKey"
+      },
+      {
+        "name": "Passages_TransportModeKey_Mode de transport",
+        "fromTable": "Passages",
+        "fromColumn": "TransportModeKey",
+        "toTable": "Mode de transport",
+        "toColumn": "TransportModeKey"
+      },
+      {
+        "name": "Passages_ArrivalStatusKey_Statut arrivée",
+        "fromTable": "Passages",
+        "fromColumn": "ArrivalStatusKey",
+        "toTable": "Statut arrivée",
+        "toColumn": "StatusKey"
+      },
+      {
+        "name": "Passages_DepartureStatusKey_Statut départ",
+        "fromTable": "Passages",
+        "fromColumn": "DepartureStatusKey",
+        "toTable": "Statut départ",
+        "toColumn": "StatusKey"
+      },
+      {
+        "name": "Météo_DateKey_Date",
+        "fromTable": "Météo",
+        "fromColumn": "DateKey",
+        "toTable": "Date",
+        "toColumn": "DateKey"
+      },
+      {
+        "name": "Météo_TimeKey_Heure",
+        "fromTable": "Météo",
+        "fromColumn": "TimeKey",
+        "toTable": "Heure",
+        "toColumn": "TimeKey"
+      },
+      {
+        "name": "Météo_CantonKey_Canton",
+        "fromTable": "Météo",
+        "fromColumn": "CantonKey",
+        "toTable": "Canton",
+        "toColumn": "CantonKey"
+      }
+    ],
+    "roles": [
+      {
+        "name": "Lecteurs",
+        "modelPermission": "read",
+        "description": "Lecture de tout le modèle. Ajouter ici les comptes Windows autorisés."
+      },
+      {
+        "name": "Lecteurs Suisse romande",
+        "modelPermission": "read",
+        "description": "Exemple de sécurité au niveau des lignes (RLS) : ne voit que les cantons romands.",
+        "tablePermissions": [
+          {
+            "name": "Canton",
+            "filterExpression": "'Canton'[Région linguistique] = \"Suisse romande\""
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "700"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}

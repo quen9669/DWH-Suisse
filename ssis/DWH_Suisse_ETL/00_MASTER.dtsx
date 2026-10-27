@@ -1,0 +1,461 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/27/2026 08:00:00"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DWH-SUISSE"
+  DTS:CreatorName="DWH-SUISSE\dev"
+  DTS:Description="MASTER PACKAGE : orchestre tout le chargement (extraction &gt; ODS &gt; STG &gt; DWH &gt; cube) et journalise le lot dans CH_ADMIN."
+  DTS:DTSID="{AF884855-2261-50ED-85B1-3ADC6346ED6B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="00_MASTER"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{8AC74BD8-2AAB-5260-9422-28A824283FA8}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7BF3ED40-67E3-53D4-B748-39AF3D9FB55F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="BatchId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\SQL Ouvrir le lot"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Crée un nouveau lot dans CH_ADMIN.etl.Batch et récupère son n°"
+      DTS:DTSID="{5054B643-1A29-5C49-A944-DC88729545EE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Ouvrir le lot"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{DE7DE2B7-2780-5BE2-A0F9-2D7CC5B721A0}"
+          SQLTask:SqlStatementSource="EXEC etl.usp_Batch_Start @PackageName = ?;"
+          SQLTask:ResultSetType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::BatchId" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SEQ 1 Extraction"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Étape 1 : récupérer les fichiers sources"
+      DTS:DTSID="{766D212E-444F-55C9-9C9F-E76D90FBCA72}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ 1 Extraction">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ 1 Extraction\EPT 10_EXT_Telechargement"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Téléchargement des sources"
+          DTS:DTSID="{135BD558-E84C-533D-A13E-2F325FA02699}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="EPT 10_EXT_Telechargement"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>10_EXT_Telechargement.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>BatchId</ParameterName>
+                <BindedVariableOrParameterName>User::BatchId</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SEQ 2 ODS"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Étape 2 : charger les données brutes (3 packages en parallèle)"
+      DTS:DTSID="{BC18917E-FE28-5962-9497-8615CC2BFDAE}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ 2 ODS">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ 2 ODS\EPT 20_ODS_ServicePoints"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Référentiel des arrêts -&gt; ODS"
+          DTS:DTSID="{DFA612D6-4341-5292-8DEE-EE9E54AF98E5}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="EPT 20_ODS_ServicePoints"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>20_ODS_ServicePoints.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>BatchId</ParameterName>
+                <BindedVariableOrParameterName>User::BatchId</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ 2 ODS\EPT 21_ODS_Istdaten"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Passages réels -&gt; ODS"
+          DTS:DTSID="{A9796950-C3FF-5866-8C01-E950693BEF19}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="EPT 21_ODS_Istdaten"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>21_ODS_Istdaten.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>BatchId</ParameterName>
+                <BindedVariableOrParameterName>User::BatchId</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ 2 ODS\EPT 22_ODS_Meteo"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Météo -&gt; ODS"
+          DTS:DTSID="{42CA4BB2-74CC-5EEA-8DDC-64944A9F2B01}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="EPT 22_ODS_Meteo"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>22_ODS_Meteo.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>BatchId</ParameterName>
+                <BindedVariableOrParameterName>User::BatchId</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SEQ 3 STG"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Étape 3 : préparer les données (staging)"
+      DTS:DTSID="{BE1475EE-4527-5324-8F4C-C308A3B058EA}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ 3 STG">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ 3 STG\EPT 30_STG_Preparation"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Typage, qualité, calculs"
+          DTS:DTSID="{588A92F7-408E-5DEA-9A4E-5BC65B334C54}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="EPT 30_STG_Preparation"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>30_STG_Preparation.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>BatchId</ParameterName>
+                <BindedVariableOrParameterName>User::BatchId</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SEQ 4 DWH"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Étape 4 : alimenter l'entrepôt (dimensions PUIS faits)"
+      DTS:DTSID="{5A66BE03-A4EC-5D3D-87F9-83C7332818B7}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ 4 DWH">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ 4 DWH\EPT 40_DWH_Dimensions"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Dimensions"
+          DTS:DTSID="{57EB4326-612E-5470-BAC0-A956341123DE}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="EPT 40_DWH_Dimensions"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>40_DWH_Dimensions.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>BatchId</ParameterName>
+                <BindedVariableOrParameterName>User::BatchId</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ 4 DWH\EPT 41_DWH_Faits"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Faits"
+          DTS:DTSID="{9FC9C36E-3809-5F9C-AAFA-5C6314569A6C}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="EPT 41_DWH_Faits"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>41_DWH_Faits.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>BatchId</ParameterName>
+                <BindedVariableOrParameterName>User::BatchId</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SEQ 4 DWH.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{6C422A79-CF84-5ACE-B9E8-4B567457418E}"
+          DTS:From="Package\SEQ 4 DWH\EPT 40_DWH_Dimensions"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\SEQ 4 DWH\EPT 41_DWH_Faits" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EPT 50_SSAS_Traitement"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Étape 5 : traiter le cube (désactivé tant que le paramètre TraiterCube = false)"
+      DTS:DTSID="{48EB8FE8-9950-55DE-83A4-7D080BF00206}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EPT 50_SSAS_Traitement"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:PropertyExpression
+        DTS:Name="Disable">!@[$Project::TraiterCube]</DTS:PropertyExpression>
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>50_SSAS_Traitement.dtsx</PackageName>
+          <ParameterAssignment>
+            <ParameterName>BatchId</ParameterName>
+            <BindedVariableOrParameterName>User::BatchId</BindedVariableOrParameterName>
+          </ParameterAssignment>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Purger ODS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Supprime les données brutes intégrées depuis plus de N jours"
+      DTS:DTSID="{D605EBDE-37E8-5FEA-B350-F95A555C1F86}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Purger ODS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3B1C6811-7B0A-5357-A804-67E41EA2DCBC}"
+          SQLTask:SqlStatementSource="EXEC ods.usp_Purge @BatchId = ?, @RetentionDays = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::BatchId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="$Project::RetentionJoursODS"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Clôturer le lot"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Marque le lot en succès"
+      DTS:DTSID="{A8E8C835-C778-5D7F-BB2F-779D9784E26A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Clôturer le lot"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{DE7DE2B7-2780-5BE2-A0F9-2D7CC5B721A0}"
+          SQLTask:SqlStatementSource="EXEC etl.usp_Batch_End @BatchId = ?, @Status = N'Succès';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::BatchId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{4C6A3063-A5B6-5141-8880-3C1AA9AC8975}"
+      DTS:From="Package\SQL Ouvrir le lot"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SEQ 1 Extraction" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{6EB2DEA5-C686-5B51-9E63-90FE1F57EDC1}"
+      DTS:From="Package\SEQ 1 Extraction"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\SEQ 2 ODS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{A3645AB5-339E-51F9-96FC-24B258DE30E6}"
+      DTS:From="Package\SEQ 2 ODS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\SEQ 3 STG" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{DC14C2B0-9D8B-5B91-8BFB-3E6AC8C97F1D}"
+      DTS:From="Package\SEQ 3 STG"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\SEQ 4 DWH" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{EE88725F-8239-5B3C-867D-45E8DF93BA9C}"
+      DTS:From="Package\SEQ 4 DWH"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\EPT 50_SSAS_Traitement" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{AC4C67CA-3D7B-5548-9D55-52D5FC8011DD}"
+      DTS:From="Package\EPT 50_SSAS_Traitement"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\SQL Purger ODS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{B8DBC8C7-2185-5391-8945-611B1FDB9430}"
+      DTS:From="Package\SQL Purger ODS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\SQL Clôturer le lot" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{06E7908A-D912-56C3-8E4B-AD6D260A166D}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{0A61173A-BAB2-5F6B-AE80-8FFD40392347}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\SQL Journaliser erreur"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Enregistre l'erreur dans CH_ADMIN"
+          DTS:DTSID="{821ED9D9-ED9D-5FE6-B9F2-83F70014370F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Journaliser erreur"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{DE7DE2B7-2780-5BE2-A0F9-2D7CC5B721A0}"
+              SQLTask:SqlStatementSource="EXEC etl.usp_Batch_End @BatchId = ?, @Status = N'Échec', @ErrorMessage = ?, @SourceName = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::BatchId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="2"
+                SQLTask:DtsVariableName="System::SourceName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+</DTS:Executable>

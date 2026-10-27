@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="CM_DWH"
+  DTS:DTSID="{1F409874-51C9-5359-B019-91A2301DE331}"
+  DTS:CreationName="OLEDB">
+  <DTS:PropertyExpression
+    DTS:Name="ServerName">@[$Project::ServerName]</DTS:PropertyExpression>
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=localhost;Initial Catalog=CH_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=DWH_Suisse_ETL;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

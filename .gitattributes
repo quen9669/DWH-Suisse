@@ -1,0 +1,14 @@
+# Fichiers Windows : fins de ligne CRLF conservées
+*.sql     text eol=crlf
+*.ps1     text eol=crlf
+*.dtsx    text eol=crlf
+*.dtproj  text eol=crlf
+*.conmgr  text eol=crlf
+*.params  text eol=crlf
+*.database text eol=crlf
+*.bim     text eol=crlf
+*.smproj  text eol=crlf
+*.csv     text eol=lf
+
+# Binaires
+*.pbix    binary

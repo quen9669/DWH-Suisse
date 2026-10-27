@@ -1,0 +1,27 @@
+# --- Données (téléchargées, jamais versionnées) ---
+data/
+*.csv
+!scripts/ref/*.csv
+*.zip
+*.json.part
+*.part
+
+# --- Visual Studio ---
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.dtproj.user
+*.smproj.user
+*.database.user
+*.abf
+*.cache
+
+# --- Python (outils) ---
+__pycache__/
+*.pyc
+
+# --- Windows ---
+Thumbs.db
+desktop.ini

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DeploymentModel>Project</DeploymentModel>
+  <ProductVersion>16.0.5685.0</ProductVersion>
+  <SchemaVersion>9.0.1.0</SchemaVersion>
+  <State>$base64$PFNvdXJjZUNvbnRyb2xJbmZvIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KICA8RW5hYmxlZD5mYWxzZTwvRW5hYmxlZD4NCiAgPFByb2plY3ROYW1lPjwvUHJvamVjdE5hbWU+DQogIDxBdXRoZW50aWNhdGlvbkRhdGE+PC9BdXRoZW50aWNhdGlvbkRhdGE+DQogIDxMb2dpY2FsUHJvamVjdE5hbWU+PC9Mb2dpY2FsUHJvamVjdE5hbWU+DQogIDxTb3VyY2VDb250cm9sUHJvdmlkZXI+PC9Tb3VyY2VDb250cm9sUHJvdmlkZXI+DQo8L1NvdXJjZUNvbnRyb2xJbmZvPg==</State>
+  <Database>
+    <Name>DWH_Suisse_ETL.database</Name>
+    <FullPath>DWH_Suisse_ETL.database</FullPath>
+  </Database>
+  <DataSources />
+  <DataSourceViews />
+  <DeploymentModelSpecificContent>
+    <Manifest>
+      <SSIS:Project SSIS:ProtectionLevel="DontSaveSensitive" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+        <SSIS:Properties>
+          <SSIS:Property SSIS:Name="ID">{6E77DC32-A8A1-51F2-AACA-5D05AD57DBF5}</SSIS:Property>
+          <SSIS:Property SSIS:Name="Name">DWH_Suisse_ETL</SSIS:Property>
+          <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+          <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+          <SSIS:Property SSIS:Name="VersionBuild">0</SSIS:Property>
+          <SSIS:Property SSIS:Name="VersionComments"></SSIS:Property>
+          <SSIS:Property SSIS:Name="CreationDate">2026-10-27T08:00:00</SSIS:Property>
+          <SSIS:Property SSIS:Name="CreatorName">DWH-SUISSE\dev</SSIS:Property>
+          <SSIS:Property SSIS:Name="CreatorComputerName">DWH-SUISSE</SSIS:Property>
+          <SSIS:Property SSIS:Name="Description">Alimentation du DWH Suisse (transports publics + météo)</SSIS:Property>
+          <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
+        </SSIS:Properties>
+        <SSIS:Packages>
+          <SSIS:Package SSIS:Name="00_MASTER.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="10_EXT_Telechargement.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="20_ODS_ServicePoints.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="21_ODS_Istdaten.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="22_ODS_Meteo.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="30_STG_Preparation.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="40_DWH_Dimensions.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="41_DWH_Faits.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="50_SSAS_Traitement.dtsx" SSIS:EntryPoint="1" />
+        </SSIS:Packages>
+        <SSIS:ConnectionManagers>
+          <SSIS:ConnectionManager SSIS:Name="CM_ADMIN.conmgr" />
+          <SSIS:ConnectionManager SSIS:Name="CM_ODS.conmgr" />
+          <SSIS:ConnectionManager SSIS:Name="CM_STG.conmgr" />
+          <SSIS:ConnectionManager SSIS:Name="CM_DWH.conmgr" />
+        </SSIS:ConnectionManagers>
+        <SSIS:DeploymentInfo>
+          <SSIS:ProjectConnectionParameters />
+          <SSIS:PackageInfo>
+            <SSIS:PackageMetaData SSIS:Name="00_MASTER.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{AF884855-2261-50ED-85B1-3ADC6346ED6B}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">00_MASTER</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments"></SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{8AC74BD8-2AAB-5260-9422-28A824283FA8}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">MASTER PACKAGE : orchestre tout le chargement (extraction &gt; ODS &gt; STG &gt; DWH &gt; cube) et journalise le lot dans CH_ADMIN.</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters />
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="10_EXT_Telechargement.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{A58D933B-F6FA-525A-AEA4-881EDAC0114D}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">10_EXT_Telechargement</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments"></SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{60C5C6C0-25C3-5BDB-93B8-98427F72D86C}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">EXTRACTION : télécharge les fichiers sources (gares, passages réels, météo) via PowerShell.</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="BatchId">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{DF8303F2-7FB3-55A6-B3B4-6BCBC2166C62}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">N° du lot transmis par le master package (0 = exécution isolée)</SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="20_ODS_ServicePoints.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{B914672C-C486-5A0F-921F-2788CC000FCB}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">20_ODS_ServicePoints</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments"></SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{0D2D186E-40E5-5483-AB4D-A428A60A458C}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">ODS : charge le référentiel des points d'arrêt (CSV) dans CH_ODS.ods.ServicePoint.</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="BatchId">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{EB843A8E-6C84-5D9C-BA6C-F1AE8FF22D85}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">N° du lot transmis par le master package (0 = exécution isolée)</SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="21_ODS_Istdaten.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{B9EFDBB8-C8D3-57EE-9E8B-BEE8D6E4EFEA}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">21_ODS_Istdaten</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments"></SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{64E33D28-79DA-5513-ADB2-FD5E2B58BDAD}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">ODS : charge chaque fichier Istdaten (passages réels) dans CH_ODS.ods.Istdaten puis l'archive.</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="BatchId">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{B9099721-B0D4-5D60-A268-85A8B0460EAC}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">N° du lot transmis par le master package (0 = exécution isolée)</SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="22_ODS_Meteo.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{1B9BD25A-07FB-5F88-9003-17D77D21621E}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">22_ODS_Meteo</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments"></SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{31C8D55B-946C-57F1-B4D8-C3A733C14215}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">ODS : charge les réponses JSON d'Open-Meteo dans CH_ODS.ods.MeteoJson puis les archive.</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="BatchId">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{FC6B0714-F3AC-54FA-833A-E99F1D2EA3C2}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">N° du lot transmis par le master package (0 = exécution isolée)</SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="30_STG_Preparation.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{3297C8E0-6DDD-5868-A8D6-BF375F17D448}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">30_STG_Preparation</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments"></SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{815BA7DE-7011-573A-A736-27231B3F338F}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">STG : convertit, contrôle et prépare les données brutes (procédures stg.*).</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="BatchId">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{F06B0657-A78C-5FB1-82AB-44AA5E543843}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">N° du lot transmis par le master package (0 = exécution isolée)</SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="40_DWH_Dimensions.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{90573D94-4726-5B88-BFDB-D0CE27257B44}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">40_DWH_Dimensions</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments"></SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{81112D80-F744-5257-AD59-AFF5B44C0931}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">DWH : alimente les dimensions (SCD1 opérateurs/lignes, SCD2 arrêts, membres déduits).</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="BatchId">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{0354D820-D6AB-5B7C-8C00-138E35FE30B4}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">N° du lot transmis par le master package (0 = exécution isolée)</SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="41_DWH_Faits.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{83BDC819-98DB-518A-9C8C-A2B703BB629A}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">41_DWH_Faits</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments"></SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{40B1467A-BE3D-5950-AB53-4552FF63ED24}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">DWH : alimente les tables de faits (passages, météo) - suppression/insertion par jour.</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="BatchId">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{72020D99-F7B1-54B0-83B9-C11705853B23}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">N° du lot transmis par le master package (0 = exécution isolée)</SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="50_SSAS_Traitement.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{2A3AED17-4727-57A8-ADA9-633BC06B07EE}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">50_SSAS_Traitement</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments"></SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{BCC06112-D34B-5818-A257-3553044AF5F8}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">CUBE : traite (recharge) le modèle SSAS Tabular depuis CH_DWH.</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="BatchId">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">{2E36CCF0-05FB-5204-B39E-8CDCD4850299}</SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">N° du lot transmis par le master package (0 = exécution isolée)</SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+          </SSIS:PackageInfo>
+        </SSIS:DeploymentInfo>
+      </SSIS:Project>
+    </Manifest>
+  </DeploymentModelSpecificContent>
+  <ControlFlowParts />
+  <Miscellaneous />
+  <Configurations>
+    <Configuration>
+      <Name>Development</Name>
+      <Options>
+        <OutputPath>bin</OutputPath>
+        <ConnectionMappings />
+        <ConnectionProviderMappings />
+        <ConnectionSecurityMappings />
+        <DatabaseStorageLocations />
+        <TargetServerVersion>SQLServer2022</TargetServerVersion>
+        <ParameterConfigurationValues />
+      </Options>
+    </Configuration>
+  </Configurations>
+</Project>

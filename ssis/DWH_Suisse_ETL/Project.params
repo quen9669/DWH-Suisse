@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<SSIS:Parameters xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+  <SSIS:Parameter
+    SSIS:Name="ServerName">
+    <SSIS:Properties>
+      <SSIS:Property SSIS:Name="ID">{4585CC30-9C30-5E96-A1E1-75BFA1C7CC31}</SSIS:Property>
+      <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+      <SSIS:Property SSIS:Name="Description">Instance SQL Server hébergeant CH_ADMIN, CH_ODS, CH_STG, CH_DWH</SSIS:Property>
+      <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Value">localhost</SSIS:Property>
+      <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+    </SSIS:Properties>
+  </SSIS:Parameter>
+  <SSIS:Parameter
+    SSIS:Name="DataFolder">
+    <SSIS:Properties>
+      <SSIS:Property SSIS:Name="ID">{29E6316F-4112-5CBA-BE32-9E1F3DDDBBB0}</SSIS:Property>
+      <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+      <SSIS:Property SSIS:Name="Description">Dossier racine des fichiers téléchargés</SSIS:Property>
+      <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Value">C:\DWH_Suisse\data</SSIS:Property>
+      <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+    </SSIS:Properties>
+  </SSIS:Parameter>
+  <SSIS:Parameter
+    SSIS:Name="ScriptsFolder">
+    <SSIS:Properties>
+      <SSIS:Property SSIS:Name="ID">{78BECAAE-1ECE-597F-A515-2386486C1F58}</SSIS:Property>
+      <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+      <SSIS:Property SSIS:Name="Description">Dossier des scripts PowerShell du dépôt</SSIS:Property>
+      <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Value">C:\DWH_Suisse\DWH-Suisse\scripts</SSIS:Property>
+      <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+    </SSIS:Properties>
+  </SSIS:Parameter>
+  <SSIS:Parameter
+    SSIS:Name="NbJoursIstdaten">
+    <SSIS:Properties>
+      <SSIS:Property SSIS:Name="ID">{1F5DB5A5-C44D-5C7A-82C7-328FFD0E09A9}</SSIS:Property>
+      <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+      <SSIS:Property SSIS:Name="Description">Nombre de jours de passages réels à télécharger (les plus récents)</SSIS:Property>
+      <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Value">3</SSIS:Property>
+      <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+    </SSIS:Properties>
+  </SSIS:Parameter>
+  <SSIS:Parameter
+    SSIS:Name="RetentionJoursODS">
+    <SSIS:Properties>
+      <SSIS:Property SSIS:Name="ID">{37F57430-A3B8-5507-B985-8F9F3F4B106B}</SSIS:Property>
+      <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+      <SSIS:Property SSIS:Name="Description">Durée de conservation des données brutes déjà intégrées</SSIS:Property>
+      <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Value">30</SSIS:Property>
+      <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+    </SSIS:Properties>
+  </SSIS:Parameter>
+  <SSIS:Parameter
+    SSIS:Name="TraiterCube">
+    <SSIS:Properties>
+      <SSIS:Property SSIS:Name="ID">{B3B8FA97-4B9A-5CEF-B4E1-4FE071D41CAE}</SSIS:Property>
+      <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+      <SSIS:Property SSIS:Name="Description">true = traiter le cube SSAS en fin de chargement (après l'avoir déployé)</SSIS:Property>
+      <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+      <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+    </SSIS:Properties>
+  </SSIS:Parameter>
+  <SSIS:Parameter
+    SSIS:Name="ServeurSSAS">
+    <SSIS:Properties>
+      <SSIS:Property SSIS:Name="ID">{410D357E-51F2-502B-9C2B-DF6E02F69D56}</SSIS:Property>
+      <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+      <SSIS:Property SSIS:Name="Description">Instance Analysis Services</SSIS:Property>
+      <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Value">localhost</SSIS:Property>
+      <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+    </SSIS:Properties>
+  </SSIS:Parameter>
+  <SSIS:Parameter
+    SSIS:Name="BaseSSAS">
+    <SSIS:Properties>
+      <SSIS:Property SSIS:Name="ID">{A5519AF5-C10A-5067-A615-312F93981DCF}</SSIS:Property>
+      <SSIS:Property SSIS:Name="CreationName"></SSIS:Property>
+      <SSIS:Property SSIS:Name="Description">Nom du modèle tabulaire déployé</SSIS:Property>
+      <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+      <SSIS:Property SSIS:Name="Value">DWH_Suisse_Cube</SSIS:Property>
+      <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+    </SSIS:Properties>
+  </SSIS:Parameter>
+</SSIS:Parameters>
