@@ -1,0 +1,158 @@
+{
+  ".claude/settings.json": {
+    "mtime": 1793976181.8983939,
+    "seen": 1793976182.5858963,
+    "ast_hash": "0a0ef578e59e2bb38c69f1dcb49a0e1a",
+    "semantic_hash": ""
+  },
+  "scripts/Common.ps1": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.5859036,
+    "ast_hash": "478f61fd52f9c43ed64f3ff2c05f401b",
+    "semantic_hash": ""
+  },
+  "scripts/Deploy-Database.ps1": {
+    "mtime": 1793976110.3890288,
+    "seen": 1793976182.5859072,
+    "ast_hash": "722e889220db7a0f5982fc917cd4ed73",
+    "semantic_hash": ""
+  },
+  "scripts/Get-Istdaten.ps1": {
+    "mtime": 1793976110.3890288,
+    "seen": 1793976182.585909,
+    "ast_hash": "d1ef90414732ae49aef28c54fd7bae65",
+    "semantic_hash": ""
+  },
+  "scripts/Get-Meteo.ps1": {
+    "mtime": 1793976110.3890288,
+    "seen": 1793976182.5859103,
+    "ast_hash": "aac7a03009be511e23c4fc536ea6bf96",
+    "semantic_hash": ""
+  },
+  "scripts/Get-ServicePoints.ps1": {
+    "mtime": 1793976110.3890288,
+    "seen": 1793976182.5859115,
+    "ast_hash": "54f5bf8aa0266c9c9bffe0d55b880d63",
+    "semantic_hash": ""
+  },
+  "scripts/Initialize-Environment.ps1": {
+    "mtime": 1793976110.3890288,
+    "seen": 1793976182.585913,
+    "ast_hash": "a2b1fb590053d92823639e378e432b91",
+    "semantic_hash": ""
+  },
+  "scripts/Invoke-ProcessCube.ps1": {
+    "mtime": 1793976110.3890288,
+    "seen": 1793976182.5859141,
+    "ast_hash": "dc521c5220928d75bb4e37958e09b698",
+    "semantic_hash": ""
+  },
+  "tools/generate_ssas_model.py": {
+    "mtime": 1793976110.3917518,
+    "seen": 1793976182.585915,
+    "ast_hash": "ee02a2cdd3113e7478e0e84a07437a9f",
+    "semantic_hash": ""
+  },
+  "tools/generate_ssis.py": {
+    "mtime": 1793976110.3917518,
+    "seen": 1793976182.585916,
+    "ast_hash": "75e414f87d75ccc5c8fa6b8a97a6da6b",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1793976181.8875067,
+    "seen": 1793976182.5859175,
+    "ast_hash": "67d88e9d0760c3ba54c75dfd9551c1c5",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1793976110.3879032,
+    "seen": 1793976182.5859187,
+    "ast_hash": "685582c14b91225a02e3dea841371011",
+    "semantic_hash": ""
+  },
+  "ROADMAP.md": {
+    "mtime": 1793976110.3879032,
+    "seen": 1793976182.5859199,
+    "ast_hash": "8852c3d36af6a241458f07e01ba1dc46",
+    "semantic_hash": ""
+  },
+  "docs/01_Installation.md": {
+    "mtime": 1793976110.3879032,
+    "seen": 1793976182.5859208,
+    "ast_hash": "9680057e7e1eaf79c7aa06773b9656ef",
+    "semantic_hash": ""
+  },
+  "docs/02_Architecture.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.585922,
+    "ast_hash": "801e0375a278ceac73fb747f90377e82",
+    "semantic_hash": ""
+  },
+  "docs/03_Sources_de_donnees.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.585923,
+    "ast_hash": "c8cb885d180ff51a4df5a40976330a6b",
+    "semantic_hash": ""
+  },
+  "docs/04_Modele_de_donnees.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.5859241,
+    "ast_hash": "6013e7fd5fdd6af7ba5c0782b23860b9",
+    "semantic_hash": ""
+  },
+  "docs/05_Packages_SSIS.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.585925,
+    "ast_hash": "4fc2461a1ffd95578dceccbc349a0601",
+    "semantic_hash": ""
+  },
+  "docs/06_Cube_SSAS.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.5859258,
+    "ast_hash": "66ca73248a05f5fb5160502a06eca1a1",
+    "semantic_hash": ""
+  },
+  "docs/07_Power_BI.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.585927,
+    "ast_hash": "43cf263ba4c599033c1d7f118613b067",
+    "semantic_hash": ""
+  },
+  "docs/08_Exploitation_et_depannage.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.5859282,
+    "ast_hash": "fb62f46aa31f0a3940d1407ab7489c77",
+    "semantic_hash": ""
+  },
+  "docs/09_Glossaire.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.5859292,
+    "ast_hash": "f727cd421e6b8bfd9af6c67c5532eea6",
+    "semantic_hash": ""
+  },
+  "docs/10_Bonnes_pratiques.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.5859308,
+    "ast_hash": "3953d39bd848cac53206ac0b91f92e47",
+    "semantic_hash": ""
+  },
+  "docs/11_Exercices.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.585932,
+    "ast_hash": "1ad54c0d25cbcd3c66c97459fff71703",
+    "semantic_hash": ""
+  },
+  "powerbi/README.md": {
+    "mtime": 1793976110.38854,
+    "seen": 1793976182.5859327,
+    "ast_hash": "a372fa295b202248f2bc6935be0c7e49",
+    "semantic_hash": ""
+  },
+  "tools/README.md": {
+    "mtime": 1793976110.3903282,
+    "seen": 1793976182.585934,
+    "ast_hash": "0658f0dd55bdf790088a534b3e907a94",
+    "semantic_hash": ""
+  }
+}

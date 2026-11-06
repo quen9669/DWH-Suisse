@@ -1,0 +1,22 @@
+{
+  "0": "generate_ssis.py",
+  "1": "child_package",
+  "2": "5. Le projet SSIS `DWH_Suisse_ETL`",
+  "3": "README.md",
+  "4": "Erreurs courantes et solutions",
+  "5": "1. Installation pas à pas",
+  "6": "11. Exercices pour monter en compétence",
+  "7": "Roadmap : de l'installation au rapport Power BI",
+  "8": "Common.ps1",
+  "9": "generate_ssas_model.py",
+  "10": "4. Modèle de données de l'entrepôt (CH_DWH)",
+  "11": "DWH Suisse : ponctualité des transports publics suisses",
+  "12": "6. Le cube SSAS Tabular `DWH_Suisse_Cube`",
+  "13": "Rapport proposé : 4 pages",
+  "14": "Bonnes pratiques déjà appliquées",
+  "15": "1. Passages réels : *Ist-Daten*",
+  "16": "2. Architecture expliquée simplement",
+  "17": "CLAUDE.md",
+  "18": "tools/README.md",
+  "19": "Initialize-Environment.ps1"
+}
